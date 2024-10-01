@@ -1,5 +1,6 @@
 package machinetest.nimap.service.impl;
 
+import machinetest.nimap.constant.ExceptionMessageConstant;
 import machinetest.nimap.entity.Product;
 import machinetest.nimap.exception.ResourceNotFoundException;
 import machinetest.nimap.model.PaginatedResponseModel;
@@ -30,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseModel getProductById(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ExceptionMessageConstant.PRODUCT_NOT_FOUND + id));
         return productResponse(product);
     }
 
@@ -52,10 +53,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductResponseModel updateProduct(Long id, ProductRequestModel request) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ExceptionMessageConstant.PRODUCT_NOT_FOUND + id));
         product.setName(request.getName());
         product.setPrice(request.getPrice());
-        product.setCategory(categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + request.getCategoryId())));
+        product.setCategory(categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException(ExceptionMessageConstant.CATEGORY_NOT_FOUND + request.getCategoryId())));
         product = productRepository.save(product);
         return productResponse(product);
     }
@@ -72,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
             Product product = new Product();
             product.setName(request.getName());
             product.setPrice(request.getPrice());
-            product.setCategory(request.getCategoryId() != null && request.getCategoryId()>0 ? categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + request.getCategoryId())) : null);
+            product.setCategory(request.getCategoryId() != null && request.getCategoryId()>0 ? categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException(ExceptionMessageConstant.CATEGORY_NOT_FOUND + request.getCategoryId())) : null);
             product = productRepository.save(product);
             return productResponse(product);
         }
