@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
             Product product = new Product();
             product.setName(request.getName());
             product.setPrice(request.getPrice());
-            product.setCategory(request.getCategoryId() != null ? categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + request.getCategoryId())) : null);
+            product.setCategory(request.getCategoryId() != null && request.getCategoryId()==0 ? categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + request.getCategoryId())) : null);
             product = productRepository.save(product);
             return productResponse(product);
         }
