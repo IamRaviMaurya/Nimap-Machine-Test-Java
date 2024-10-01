@@ -1,4 +1,4 @@
-package machinetest.nimap.machine_test;
+package machinetest.nimap;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
