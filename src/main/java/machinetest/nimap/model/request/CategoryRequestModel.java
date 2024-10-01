@@ -11,6 +11,5 @@ import java.io.Serializable;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryRequestModel implements Serializable {
-    Long id;
     String name;
 }
